@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SecondActivity"/>
+        <activity android:name=".ThirdActivity"/>
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
