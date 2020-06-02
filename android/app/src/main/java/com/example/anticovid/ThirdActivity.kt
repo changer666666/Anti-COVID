@@ -22,11 +22,14 @@ class ThirdActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.third_activity)
 
-
         var passed = ArrayList<String>()
+        var textshow : String = ""
+        passed = intent.getStringArrayListExtra("KEY")
+        for( i in passed){
+            textshow += i + "\n"
+        }
 
-//        passed = intent.getStringExtra("KEY")
-//        summaryTextView.text = passed
+        summaryTextView.text = textshow
 
         // Is the button now checked
         title = "KotlinApp"
