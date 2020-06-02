@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -50,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
                     logIn()
                 } else {
@@ -69,10 +70,9 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this){task ->
                 if (task.isSuccessful){
                     //Add to DB
-                    storeUserInfo()
+                    storeUserInfo(task)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
 
                     //Login the user
@@ -88,10 +88,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SecondActivity::class.java)
         startActivity(intent)
     }
-    fun storeUserInfo(){
-        //Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+    fun storeUserInfo(task: Task<AuthResult>){
+        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
     }
 
