@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "528736127951",
+    "firebase_url": "https://anticovid-a242d.firebaseio.com",
+    "project_id": "anticovid-a242d",
+    "storage_bucket": "anticovid-a242d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528736127951:android:7e8e38b9933cf3e337a0ba",
+        "android_client_info": {
+          "package_name": "com.example.anticovid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528736127951-9kdqv88d7vmmonuko3j7s0femc4nrk06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anticovid",
+            "certificate_hash": "ca204159878121630e61ba1b717485feecdfd9f6"
+          }
+        },
+        {
+          "client_id": "528736127951-8qnulinpanbm2r1vncp18skmm6uaobrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-RxDP35Y37fVZGpD_JElvTMVr3KEJV0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "528736127951-8qnulinpanbm2r1vncp18skmm6uaobrm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
