@@ -39,13 +39,13 @@ class SecondActivity : AppCompatActivity() {
 
         serviceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                Toast.makeText( this@SecondActivity, "Select one to continue", Toast.LENGTH_SHORT).show()
+//                Toast.makeText( this@SecondActivity, "Select one to continue", Toast.LENGTH_SHORT).show()
             }
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long){
                 pickedService = serviceOp.get(position)
                 Log.d("tag", "service: $pickedService")
-                Toast.makeText( this@SecondActivity, "option: $pickedService", Toast.LENGTH_SHORT).show()
+//                Toast.makeText( this@SecondActivity, "option: $pickedService", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -56,7 +56,7 @@ class SecondActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 pickedDr = doctorOp.get(position)
-                Toast.makeText(this@SecondActivity, "option: $pickedDr", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@SecondActivity, "option: $pickedDr", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -67,21 +67,30 @@ class SecondActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 pickedInsurance = insuranceOp.get(position)
-                Toast.makeText(this@SecondActivity, "option: $pickedInsurance", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@SecondActivity, "option: $pickedInsurance", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     fun confirmed(view: View){
-        var list = ArrayList<String>()
-        list.add(pickedService)
-        list.add(pickedDr)
-        list.add(pickedInsurance)
+        if(pickedService == "select a service"){
+            Toast.makeText(this@SecondActivity, "Please select a service", Toast.LENGTH_SHORT).show()
+        }else if(pickedDr == "select a Doctor"){
+            Toast.makeText(this@SecondActivity, "Please select a Doctor", Toast.LENGTH_SHORT).show()
+        }
+        else if(pickedInsurance == "select your insurance"){
+            Toast.makeText(this@SecondActivity, "Please select your insurance", Toast.LENGTH_SHORT).show()
+        }else{
+            var list = ArrayList<String>()
+            list.add(pickedService)
+            list.add(pickedDr)
+            list.add(pickedInsurance)
 
-        val intent = Intent(this, ThirdActivity::class.java)
-//        intent.putExtra(KEY, list)
-        intent.putExtra(KEY, list)
-        startActivityForResult(intent, RCODE)
+            val intent = Intent(this, ThirdActivity::class.java)
+            intent.putExtra(KEY, list)
+            startActivityForResult(intent, RCODE)
+        }
+
     }
 
     companion object{

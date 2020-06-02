@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/summaryTextView"
-        android:layout_width="240dp"
-        android:layout_height="26dp"
+        android:layout_width="320dp"
+        android:layout_height="100dp"
         android:text="summaryTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
