@@ -15,8 +15,8 @@
 
     <string-array name="doctor_option">
         <item>select a Doctor</item>
-        <item>Dr.A</item>
-        <item>Dr.B</item>
+        <item>Dr.Strange</item>
+        <item>Dr.Who</item>
     </string-array>
 
     <string-array name="insurance_option">

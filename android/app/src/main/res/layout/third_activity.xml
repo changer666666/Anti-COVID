@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="90dp"
             android:layout_height="34dp"
-            android:src = "@drawable/creditlogo"/>
+            android:src="@drawable/creditlogo" />
 
         <RadioButton
             android:id="@+id/buOthers"

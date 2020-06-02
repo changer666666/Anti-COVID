@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "528736127951-bee58g9ddqjui7vnipfdqtbh850fqn2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anticovid",
+            "certificate_hash": "b3bb7a33f7d76c90b7bb37818969f6404b75bee0"
+          }
+        },
+        {
           "client_id": "528736127951-9kdqv88d7vmmonuko3j7s0femc4nrk06.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

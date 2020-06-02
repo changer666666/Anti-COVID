@@ -38,10 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun send_second(view: View){
-        val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
-    }
     fun goClicked(view:View){
         //Check if we can log in the user
         auth.signInWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
