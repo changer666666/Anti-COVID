@@ -48,25 +48,15 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
                     logIn()
                 } else {
                     // If sign in fails, display a message to the user.
-                    auth.createUserWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
-                        .addOnCompleteListener(this){task ->
-                            if (task.isSuccessful){
-                                //Add to DB
-                                Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
-                                Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-                                Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
-                                Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
-
-                                //Login the user
-                                logIn()
-                            }else{
-                                Toast.makeText(baseContext, "Authentication failed. Try Again",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-
+                    Toast.makeText(baseContext, "Authentication failed. Try Again",
+                        Toast.LENGTH_SHORT).show()
                     }
                     // ...
                 }
@@ -74,10 +64,36 @@ class MainActivity : AppCompatActivity() {
                 // ...
             }
 
-    }
+    fun signupClicked(view: View) {
+        auth.createUserWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
+            .addOnCompleteListener(this){task ->
+                if (task.isSuccessful){
+                    //Add to DB
+                    storeUserInfo()
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
+                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
+
+                    //Login the user
+                    logIn()
+                }else{
+                    Toast.makeText(baseContext, "Authentication failed. Try Again",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     fun logIn(){
         //Move to NextActivity
         val intent = Intent(this, SecondActivity::class.java)
         startActivity(intent)
     }
+    fun storeUserInfo(){
+        //Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
+        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
+        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
+    }
+
+
 }
