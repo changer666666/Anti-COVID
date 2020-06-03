@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">AntiCOVID</string>
+
+    <string-array name="service_option">
+        <item>Allergic reactions</item>
+        <item>Cuts, burns, bug bites and animal bites</item>
+        <item>Falls, sprains, strains, and broken bones</item>
+        <item>Colds and flus</item>
+        <item>Pink eye</item>
+        <item>Ear infections</item>
+        <item>Sinus pressure</item>
+        <item>Bronchitis and strep throat</item>
+    </string-array>
+
+    <string-array name="doctor_option">
+        <item>Dr.A</item>
+        <item>Dr.B</item>
+    </string-array>
+
+    <string-array name="insurance_option">
+        <item>CISI</item>
+        <item>Anthem, Inc.</item>
+        <item>UnitedHealth</item>
+        <item>Kaiser Foundation</item>
+    </string-array>
+
 </resources>
