@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
 
-        if(mAuth.currentUser != null){
+        if(mAuth.currentUser != null) {
             logIn()
         }
-
     }
+
     fun goClicked(view:View){
         //Check if we can log in the user
         auth.signInWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
     fun logIn(){
         //Move to NextActivity
         var list = emailEditText?.text.toString()
@@ -87,11 +88,13 @@ class MainActivity : AppCompatActivity() {
         intent. putExtra(KEY, list)
         startActivityForResult(intent, SecondActivity.RCODE)
     }
+
     fun storeUserInfo(task: Task<AuthResult>){
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
     }
+
     companion object{
         const val KEY = "Email"
         const val RCODE = 321

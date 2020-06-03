@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">AntiCOVID</string>
+    <string name="summary">Summary</string>
 
     <string-array name="service_option">
+        <item>select a service</item>
         <item>Allergic reactions</item>
         <item>Cuts, burns, bug bites and animal bites</item>
         <item>Falls, sprains, strains, and broken bones</item>
@@ -13,11 +15,14 @@
     </string-array>
 
     <string-array name="doctor_option">
-        <item>Dr.A</item>
-        <item>Dr.B</item>
+        <item>select a Doctor</item>
+        <item>Dr.Strange</item>
+        <item>Dr.Who</item>
     </string-array>
 
     <string-array name="insurance_option">
+        <item>select your insurance</item>
+        <item>No Insurance</item>
         <item>CISI</item>
         <item>Anthem, Inc.</item>
         <item>UnitedHealth</item>
