@@ -55,7 +55,10 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
 
         // Check permissions
         ActivityCompat.requestPermissions(this,
-            arrayOf( Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1)
+            arrayOf( Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION), 1)
 
     }
 
@@ -83,6 +86,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
     private fun startScan() {
         writeLine("Scanning for devices ...")
         ble!!.connectFirstAvailable()
+        Log.d("tag","after connectFirstAvailable")
     }
 
     /**
@@ -101,6 +105,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      * @param device: the BLE device
      */
     override fun onDeviceFound(device: BluetoothDevice) {
+        Log.d("tag","onDeviceFound")
         writeLine("Found device : " + device.name)
         writeLine("Waiting for a connection ...")
     }

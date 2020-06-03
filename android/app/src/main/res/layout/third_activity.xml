@@ -26,10 +26,12 @@
             android:textSize="28dp"
             android:textStyle="bold"
             android:id="@+id/status"/>
+
         <Button
             android:id="@+id/connectButt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="connect"
             android:text="Reconnect" />
 
     </LinearLayout>
