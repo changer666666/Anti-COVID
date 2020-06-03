@@ -6,8 +6,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     var timestamp: Timestamp = Timestamp(System.currentTimeMillis())
     private lateinit var auth: FirebaseAuth
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,11 +40,7 @@ class MainActivity : AppCompatActivity() {
         if(mAuth.currentUser != null){
             logIn()
         }
-    }
 
-    fun send_second(view: View){
-        val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
     }
     fun goClicked(view:View){
         //Check if we can log in the user
@@ -48,9 +48,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
                     logIn()
                 } else {
@@ -69,10 +67,8 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this){task ->
                 if (task.isSuccessful){
                     //Add to DB
-                    storeUserInfo()
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+                    storeUserInfo(task)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-                    Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
 
                     //Login the user
@@ -85,14 +81,20 @@ class MainActivity : AppCompatActivity() {
         }
     fun logIn(){
         //Move to NextActivity
+        var list = emailEditText?.text.toString()
+
         val intent = Intent(this, SecondActivity::class.java)
-        startActivity(intent)
+        intent. putExtra(KEY, list)
+        startActivityForResult(intent, SecondActivity.RCODE)
     }
-    fun storeUserInfo(){
-        //Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
+    fun storeUserInfo(task: Task<AuthResult>){
+        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child(task.result?.user!!.uid)
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
-        Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Time").setValue(rightNow)
         Firebase.database.getReference().child("patients").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
+    }
+    companion object{
+        const val KEY = "Email"
+        const val RCODE = 321
     }
 
 
