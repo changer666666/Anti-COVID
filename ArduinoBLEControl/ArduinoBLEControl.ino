@@ -1,7 +1,9 @@
 /*********************************************************************
   * Laura Arjona. UW EE P 523. SPRING 2020
+  * Chuck Hu
   * Example of simple interaction beteween Adafruit Circuit Playground
   * and Android App. Communication with BLE - uart
+  * Use for ANTI-COVID group project
 *********************************************************************/
 #include <Arduino.h>
 #include <SPI.h>
@@ -19,11 +21,18 @@
 
 // Strings to compare incoming BLE messages
 String start = "start";
-String red = "red";
-String readtemp = "readtemp";
 String stp = "stop";
 
-int  sensorTemp = 0;
+bool is_waiting = true;
+int dim = 0;
+
+bool test_signal = false;
+
+const int speaker = 5;       // The CP microcontroller pin for the speaker
+const int leftButton = 4;    // The CP microcontroller pin for the left button
+const int rightButton = 19;  // The CP microcontroller pin for the right button
+int leftButtonState = 0;
+int rightButtonState = 0;
 
 /*=========================================================================
     APPLICATION SETTINGS
@@ -57,8 +66,11 @@ void setup(void)
 {
   CircuitPlayground.begin();
   
-
   Serial.begin(115200);
+
+  pinMode(speaker, OUTPUT);
+  pinMode(leftButton, INPUT);
+  pinMode(rightButton,INPUT);
 
   /* Initialise the module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
@@ -113,6 +125,11 @@ Serial.println("CONECTED:");
   Serial.println(F("******************************"));
  
   CircuitPlayground.setPixelColor(20,20,20,20);
+
+  for(int i=0; i<10; i++){
+    CircuitPlayground.setPixelColor(i,0,255,0);
+    delay(50);
+   }
  
   delay(1000);
 }
@@ -133,34 +150,52 @@ void loop(void)
         delay(50);
   }
 
-  if(red == received){
-    Serial.println("RECEIVED RED!!!!"); 
-       for(int i = 0; i < 11; i++){
-      CircuitPlayground.setPixelColor(i,221, 44, 44);
+  leftButtonState = digitalRead(leftButton);
+  rightButtonState = digitalRead(rightButton);
+  
+//  received = "signal";// testing 
+  
+  if(received == "signal"){
+    is_waiting = false;
+    for(int i=0; i<10; i++)
+      CircuitPlayground.setPixelColor(i,0,255,0);
+
+    if(leftButtonState == HIGH || rightButtonState == HIGH){
+      Serial.println("Button Clicked!");
+      test_signal = true;
     }
+      
+    if(!test_signal){
+      makeTone(speaker,1760,100);
+      delay(250);
+    }
+  }
+
+  //on waiting list, yellow spaining lights
+  if(is_waiting){
+    Serial.println("waiting...");
+    for(int i=0; i<10; i++)
+      CircuitPlayground.setPixelColor(i,255,255,0);
+     
+    CircuitPlayground.setPixelColor(dim,0,0,0);
+    dim++;
+    if(dim >= 9)
+      dim = 0;
     delay(50);
-  }
- 
-  else if(readtemp == received){
-       
-    sensorTemp = CircuitPlayground.temperature(); // returns a floating point number in Centigrade
-    Serial.println("Read temperature sensor"); 
-    delay(10);
-
-   //Send data to Android Device
-    char output[8];
-    String data = "";
-    data += sensorTemp;
-    Serial.println(data);
-    data.toCharArray(output,8);
-    ble.print(data);
-  }
- 
-  else if (stp == received){
-      CircuitPlayground.clearPixels();
-
-    }
-    
-  }
+  }  
+}
+  
+// the sound producing function
+void makeTone (unsigned char speakerPin, int frequencyInHertz, long timeInMilliseconds) {
+  int x;   
+  long delayAmount = (long)(1000000/frequencyInHertz);
+  long loopTime = (long)((timeInMilliseconds*1000)/(delayAmount*2));
+  for (x=0; x<loopTime; x++) {        // the wave will be symetrical (same time high & low)
+     digitalWrite(speakerPin,HIGH);   // Set the pin high
+     delayMicroseconds(delayAmount);  // and make the tall part of the wave
+     digitalWrite(speakerPin,LOW);    // switch the pin back to low
+     delayMicroseconds(delayAmount);  // and make the bottom part of the wave
+  }  
+}
 
  

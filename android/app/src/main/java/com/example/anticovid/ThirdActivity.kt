@@ -59,7 +59,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                 Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION), 1)
-
+        startScan()
     }
 
     override fun onRSSIread(uart:BLEControl,rssi:Int){
@@ -123,7 +123,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      */
     override fun onConnected(ble: BLEControl) {
         writeLine("Connected!")
-
+        writeLine("You are on the waiting list...")
     }
 
     /**
