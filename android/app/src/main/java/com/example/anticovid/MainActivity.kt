@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     var nameEditText: EditText? = null
     val mAuth = FirebaseAuth.getInstance()
     var rightNow: Calendar = Calendar.getInstance()
-    var timestamp: Timestamp = Timestamp(System.currentTimeMillis())
     private lateinit var auth: FirebaseAuth
+    private lateinit var timestamp: Timestamp
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
 
+
+
         if(mAuth.currentUser != null) {
             logIn()
         }
@@ -44,10 +46,12 @@ class MainActivity : AppCompatActivity() {
 
     fun goClicked(view:View){
         //Check if we can log in the user
+        timestamp = Timestamp(System.currentTimeMillis())
         auth.signInWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("email").setValue(emailEditText?.text.toString())
                     Firebase.database.getReference().child("Waiting List").child(nameEditText?.text.toString()).child("Timestamp").setValue(timestamp.time)
                     logIn()
@@ -63,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
 
     fun signupClicked(view: View) {
+        timestamp = Timestamp(System.currentTimeMillis())
         auth.createUserWithEmailAndPassword(emailEditText?.text.toString(), passwordEditText?.text.toString())
             .addOnCompleteListener(this){task ->
                 if (task.isSuccessful){
