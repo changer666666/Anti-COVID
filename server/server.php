@@ -2,40 +2,22 @@
 	require __DIR__.'/vendor/autoload.php';
 	use Kreait\Firebase\Factory;
 
-	$factory = (new Factory())->withDatabaseUri('https://anti-covid-5e9df.firebaseio.com');
-
-	// $factory = (new Factory())->withDatabaseUri('https://anticovid-a242d.firebaseio.com');
+	$factory = (new Factory())->withDatabaseUri('https://anticovid-a242d.firebaseio.com');
 
 	$database = $factory->createDatabase();
-
-	$reference = $database->getReference('/users/2');
-	// $reference = $database->getReference('/patients');
-	// $reference = $database->getReference('/Waiting List');
 
 	//set or replace value in database
 	// $reference
  //    ->set([
- //       // 'name' => 'a2',
- //       // 'emails' => 'salesa2@domain.tld',
- //       // 'website' => 'https://app.domain.tlda2',
+ //       'name' => 'a2',
+ //       'emails' => 'salesa2@domain.tld',
+ //       'Timestamp' => '0120560189402',
  //      ]);
 
-	//query values in database
-	$snapshot = $reference->orderByChild('name')->limitToFirst(1)->getSnapshot()->remove();
-	$snapshotAll = $reference->orderByChild('name')->getSnapshot();
-	$value = $snapshot->getValue();
-	$valueAll = $snapshotAll->getValue();
 
-	// $queue = new SplQueue();
-	// $queue->enqueue('A Patient');
-	// $queue->enqueue('B Patient');
-	// $queue->enqueue('C Patient');
-	echo ("<pre>");
-	print_r($value);
-	echo ("</pre>");
-
-
-	$firebase->getAuth()->deleteUser('4');
+	//delete
+	// $ref = $reference->orderByChild('Timestamp')->limitToFirst(1)->getSnapshot()->getReference();
+	// $ref->remove();
 
 	// $key = array_search($value, (array)$valueAll);
 	// print_r($key);
@@ -43,29 +25,49 @@
 	// $child = $snapshot->hasChild();
 	// print_r($child);
 
+	//send http request to android
+	// $url = 'http://localhost/receiveHTTP.php';
+	// $data = http_build_query( array( 'name' => 'value' ) );
+	// $options = array(
+	//     'http' => array(
+	//         'header'  => "Content-type: application/x-www-form-urlencoded",
+	//         'method'  => 'POST',
+	//         'content' => $data,
+	//     ),
+	// );
+	// $context = stream_context_create( $options );
+	// $result = file_get_contents( $url, false, $context );
+	// echo "send request";
 
 	$name = "";
-	$DOB = "";
-	$info = "";
-	$ip = "";
+	$email = "";
+	$password = "";
 	$doctorName = "";
 	$doctorInfo = "";
 
 	if ( isset($_GET["name"]) ) {
 		$name = $_GET["name"];
-		$DOB = $_GET["DOB"];
-		$info = $_GET["info"];
-		$ip = $_SERVER["REMOTE_ADDR"];
-
+		$email = $_GET["patientemail"];
+		$password = $_GET["password"];
 
 		echo "<br>name is: $name";
-		echo "<br>DOB is: $DOB";
-		echo "<br>info is: $info";
-		echo "<br>patient's ip is: $ip";
+		echo "<br>email is: $email";
+		echo "<br>password is: $password";
 
-		//enqueue patient
-		//invoke database, add one patient(id increment), save android ip
+		//1. save data into patients table.
+		$curSnapshot = $database->getReference('/patients/'.$name);
+		$curSnapshot->set([
+			'Timestamp' => '00000',
+			'email' => $email
+		]);
 
+		//2. save data into waiting list table.
+		$curSnapshot = $database->getReference('/Waiting List/'.$name);
+		$curSnapshot->set([
+			'Timestamp' => '00000',
+			'email' => $email
+		]);
+		
 	}
 
 
@@ -77,10 +79,37 @@
 		echo "<br>doctorInfo is: $doctorInfo";
 
 		//dequeue current patient
-		//invoke database, delete the min id patient.
+		//invoke database, delete the earliest patient.
 
-		//send notification to android.(need android ip)
+		//1. query values in waiting list, ordered by timestamp.
+		//get the earlist patient in waiting list.
+		$earlySnapshot = $database->getReference('/Waiting List')->orderByChild('Timestamp')->limitToFirst(1)->getSnapshot();
+		$earlyValue = $earlySnapshot->getValue();
 
+		echo ("<pre>");
+		echo "earlyPatient";
+		print_r($earlyValue);
+		echo ("</pre>");
+
+		//2. set curPatient to be next petient
+		$curPatientRef = $database->getReference('/curPatient');
+		echo ("<pre>");
+		print_r($curPatientRef->getSnapshot()->getValue());
+		echo ("</pre>");
+		foreach ($earlyValue as $key => $patient){
+	    	$curEmail = "{$patient['email']}";
+		}
+		$curPatientRef->set($curEmail);
+
+		//3. set isAvailable to be true. Android will detect this field change.
+		$database->getReference('/isAvailable')->set("True");
+
+		//4.  delete ealiest patient in waiting list.
+		foreach ($earlyValue as $key => $person){
+	    	$number = $key;
+	    	// echo "$number";
+			$database->getReference('/Waiting List/'.$number)->set([]);
+		}
 	}
 
 
