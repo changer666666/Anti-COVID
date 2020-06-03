@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.second_activity.*
 
 class SecondActivity : AppCompatActivity() {
 
@@ -20,6 +18,9 @@ class SecondActivity : AppCompatActivity() {
     private lateinit var pickedService : String
     private lateinit var pickedDr: String
     private lateinit var pickedInsurance: String
+
+    var radioGroup: RadioGroup? = null
+    lateinit var radioButton: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,10 @@ class SecondActivity : AppCompatActivity() {
 //                Toast.makeText(this@SecondActivity, "option: $pickedInsurance", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Is the button now checked
+        radioGroup = findViewById(R.id.radio_group)
+        buCredit.isChecked = true
     }
 
     fun confirmed(view: View){
@@ -90,7 +95,12 @@ class SecondActivity : AppCompatActivity() {
             intent.putExtra(KEY, list)
             startActivityForResult(intent, RCODE)
         }
+        val intSelectButton: Int = radioGroup!!.checkedRadioButtonId
+        radioButton = findViewById(intSelectButton)
 
+        var forprint = radioButton.text
+        Log.d("tag", "$forprint")
+//        Toast.makeText(this, radioButton.text, Toast.LENGTH_SHORT).show()
     }
 
     companion object{
