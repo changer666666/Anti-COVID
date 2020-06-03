@@ -20,6 +20,7 @@ class SecondActivity : AppCompatActivity() {
     private lateinit var pickedService : String
     private lateinit var pickedDr: String
     private lateinit var pickedInsurance: String
+    private lateinit var emailPass: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class SecondActivity : AppCompatActivity() {
         val serviceOp = resources.getStringArray(R.array.service_option)
         val doctorOp = resources.getStringArray(R.array.doctor_option)
         val insuranceOp = resources.getStringArray(R.array.insurance_option)
+        emailPass = intent.getStringExtra("Email")
 
         serviceSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, serviceOp)
         doctorSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, doctorOp)
@@ -72,11 +74,13 @@ class SecondActivity : AppCompatActivity() {
         }
     }
 
+
     fun confirmed(view: View){
         var list = ArrayList<String>()
         list.add(pickedService)
         list.add(pickedDr)
         list.add(pickedInsurance)
+        list.add(emailPass)
 
         val intent = Intent(this, ThirdActivity::class.java)
 //        intent.putExtra(KEY, list)

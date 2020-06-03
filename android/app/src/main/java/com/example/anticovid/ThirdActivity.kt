@@ -1,15 +1,13 @@
 package com.example.anticovid
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.third_activity.*
 
 class ThirdActivity: AppCompatActivity() {
@@ -17,17 +15,60 @@ class ThirdActivity: AppCompatActivity() {
     var radioGroup: RadioGroup? = null
     lateinit var radioButton: RadioButton
     private lateinit var button: Button
+    private lateinit var emailVali:String
+
+
+    //add Firebase Database stuff
+    private lateinit var database: DatabaseReference// ...
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.third_activity)
 
+
+
         var passed = ArrayList<String>()
-        var textshow : String = ""
+        var textshow: String = ""
         passed = intent.getStringArrayListExtra("KEY")
-        for( i in passed){
+        var counter = 0
+        for (i in passed) {
+            if (counter == 3){
+                emailVali = i
+            }
             textshow += i + "\n"
+            counter ++
         }
+        //Read data from firebase
+        Log.d("hi","readdata")
+        database = FirebaseDatabase.getInstance().getReference()
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                if (dataSnapshot!!.exists()){
+                    Log.d("hi", dataSnapshot.toString())
+                    var isAvailable = dataSnapshot.child("isAvailable").getValue().toString()
+                    var emailCheck = dataSnapshot.child("curPatient").getValue().toString()
+                    if (isAvailable == "True"){
+                        if (emailCheck == emailVali ){
+                            Log.d("hi", "it works")
+
+                        }
+                    }
+                    Log.d("hi", "current patient email" + emailVali)
+
+                }
+                // ...
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w( "loadPost:onCancelled", databaseError.toException())
+                Log.d("hi","")
+                // ...
+            }
+        }
+        database.addValueEventListener(postListener)
 
         summaryTextView.text = textshow
 
@@ -84,10 +125,13 @@ class ThirdActivity: AppCompatActivity() {
             }
         }
         */
+        //Datalistener
+        //if (post.vale.curPatient == "Name"){
+                 //ble.sent;
+        }
     }
 
     fun onRadioButtonClicked(view: View) {
         Log.d("tag", "clicked")
     }
 
-}
