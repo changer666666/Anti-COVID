@@ -66,20 +66,19 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                     var isAvailable = dataSnapshot.child("isAvailable").getValue().toString()
                     var emailCheck = dataSnapshot.child("curPatient").getValue().toString()
                     if (isAvailable == "True" && emailCheck == emailVali) {
-                            //send signal to Arduino
-                            ble!!.send("signal")
-                            Log.i("BLE", "Signal sent")
-                            writeLine("Your turn...")
-                            writeLine("Please confirm with any button on the Arduino board")
-                            sleep(2000);
-                            Log.d("hi", "it works & delay")
-
+                        Log.d("hi", "it works")
+                        //send signal to Arduino
+                        ble!!.send("signal")
+                        Log.i("BLE", "Signal sent")
+                        sleep(2000)
+                        writeLine("Your turn...")
+                        writeLine("Please confirm with any button on the Arduino board")
                     }
+                }
                     Log.d("hi", "current patient email" + emailVali)
 
-                }
-                // ...
             }
+                // ...
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
