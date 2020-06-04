@@ -55,13 +55,11 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
             counter++
         }
         //Read data from firebase
-        Log.d("hi", "readdata")
         database = FirebaseDatabase.getInstance().getReference()
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 if (dataSnapshot!!.exists()) {
-                    Log.d("hi", dataSnapshot.toString())
                     var isAvailable = dataSnapshot.child("isAvailable").getValue().toString()
                     var emailCheck = dataSnapshot.child("curPatient").getValue().toString()
                     if (isAvailable == "True") {
@@ -70,8 +68,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                             //TODO: send signal from here
                         }
                     }
-                    Log.d("hi", "current patient email" + emailVali)
-
                 }
                 // ...
             }
