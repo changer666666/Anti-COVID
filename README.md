@@ -9,11 +9,11 @@ Due to the current pandemic, people have been asked to maintain social distancin
 Basic Feature and Functionality
 ---
 
-- ***Using the queue to represent the order of patients.
+- Using the queue to represent the order of patients.
 - Patients can check-in by App & Arduino device, instead of contacting a real person.
 - Arduino will make sound to remind patients of the time of meeting doctors.
 - Arduino will send messages to the App that can call his name & room number to meet the doctors.
-- Doctor can use the webpage to call the next patient and get the information of him.***
+- Doctor can use the webpage to call the next patient and get the information of him.
 
 
 Interactive End
@@ -41,7 +41,9 @@ Webpage
 ---
 
 We use React and bootstrap to build the frontend project. 
+
 The React repo is: https://github.com/changer666666/Anti-COVID-React 
+
 Run the React project and you can see the webpage.
 
 1. Clone the repo
@@ -64,6 +66,7 @@ npm install react-bootstrap bootstrap
 npm start
 ```
 Open http://localhost:3000 and you will see the webpage~
+
 <img src="./server/webpage.png">
 
 
@@ -71,6 +74,7 @@ Server
 ---
 
 We use Apache and PHP to build the server. 
+
 The Server code is in: https://github.com/changer666666/Anti-COVID/server
 
 1. Install Apache server on local computer
@@ -100,6 +104,8 @@ Reference
 
 Website:
 [React-bootstrap] (https://react-bootstrap.github.io/)
+
 [Firebase Admin SDK for PHP] (https://firebase-php.readthedocs.io/en/latest/overview.html)
+
 [Build a Contact Form with React and PHP] (https://blog.bitsrc.io/how-to-build-a-contact-form-with-react-js-and-php-d5977c17fec0)
 
