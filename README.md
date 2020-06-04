@@ -9,11 +9,11 @@ Due to the current pandemic, people have been asked to maintain social distancin
 Basic Feature and Functionality
 ---
 
-- ***Using the queue to represent the order of patients.
+- Using the queue to represent the order of patients.
 - Patients can check-in by App & Arduino device, instead of contacting a real person.
 - Arduino will make sound to remind patients of the time of meeting doctors.
 - Arduino will send messages to the App that can call his name & room number to meet the doctors.
-- Doctor can use the webpage to call the next patient and get the information of him.***
+- Doctor can use the webpage to call the next patient and get the information of him.
 
 
 Interactive End
@@ -39,9 +39,12 @@ Running Instruction
 
 Android and Arduino 
 ---
-1. Enter name, email address and passwaord for login. If it's first time using the app, please click "SIGN UP" for signing a new account into database.
-2. Pick a service, Doctor, and Insurance company using drop down list. Choose a payment method. Then click "NEXT" for Arduino connection.
+1. Enter name, email address and passwaord for login. If it's first time using the app, please click `SIGN UP` for signing a new account into database.
+
+2. Pick a service, Doctor, and Insurance company using drop down list. Choose a payment method. Then click `NEXT` for Arduino connection.
+
 3. Once it connected, you will be on the waiting list. When server confirmed your name, your will be moved on the current position and Arduino will make sound to remind you.
+
 4. User needs to click buttons on the Arduino board to confirm.
 
 
@@ -49,7 +52,9 @@ Webpage
 ---
 
 We use React and bootstrap to build the frontend project. 
+
 The React repo is: https://github.com/changer666666/Anti-COVID-React 
+
 Run the React project and you can see the webpage.
 
 1. Clone the repo
@@ -72,6 +77,7 @@ npm install react-bootstrap bootstrap
 npm start
 ```
 Open http://localhost:3000 and you will see the webpage~
+
 <img src="./server/webpage.png">
 
 
@@ -79,6 +85,7 @@ Server
 ---
 
 We use Apache and PHP to build the server. 
+
 The Server code is in: https://github.com/changer666666/Anti-COVID/server
 
 1. Install Apache server on local computer
@@ -108,6 +115,8 @@ Reference
 
 Website:
 [React-bootstrap] (https://react-bootstrap.github.io/)
+
 [Firebase Admin SDK for PHP] (https://firebase-php.readthedocs.io/en/latest/overview.html)
+
 [Build a Contact Form with React and PHP] (https://blog.bitsrc.io/how-to-build-a-contact-form-with-react-js-and-php-d5977c17fec0)
 
