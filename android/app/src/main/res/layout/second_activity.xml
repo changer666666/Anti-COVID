@@ -4,14 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBack">
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="128dp"
-        android:layout_height="48dp"
+        android:layout_width="138dp"
+        android:layout_height="38dp"
+        android:background="@color/colorAccent"
         android:onClick="confirmed"
         android:text="Next"
+        android:textAlignment="center"
+        android:textColor="@color/colorButtonText"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

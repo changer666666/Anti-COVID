@@ -31,13 +31,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //hide action bar
+        val actionBar = supportActionBar
+        actionBar!!.hide()
+
         // Initialize Firebase Auth
         auth = Firebase.auth
         nameEditText = findViewById(R.id.nameEditText)
         emailEditText = findViewById(R.id.emailEditText)
         passwordEditText = findViewById(R.id.passwordEditText)
-
-
 
         if(mAuth.currentUser != null) {
             logIn()

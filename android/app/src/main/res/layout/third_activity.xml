@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ThirdActivity"
-    android:background="@android:color/background_light">
+    android:background="@color/colorBack">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,10 +29,15 @@
 
         <Button
             android:id="@+id/connectButt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="128dp"
+            android:layout_height="38dp"
+            android:background="@color/colorAccent"
             android:onClick="connect"
-            android:text="Reconnect" />
+            android:text="Reconnect"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorButtonText"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

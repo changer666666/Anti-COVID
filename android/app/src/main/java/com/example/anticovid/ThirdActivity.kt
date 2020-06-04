@@ -38,9 +38,10 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.third_activity)
+        title = "AntiCOVID - WALK IN CLINIC"
 
         var passed = ArrayList<String>()
-        var textshow: String = ""
+        var textshow: String = "Summary:"
         passed = intent.getStringArrayListExtra("KEY")
         var counter = 0
         for (i in passed) {
@@ -50,6 +51,10 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
             textshow += i + "\n"
             counter++
         }
+        //Summary View Text
+//        var textshow = "Summary:"
+//        summaryTextView.text = textshow
+
         //Read data from firebase
         Log.d("hi", "readdata")
         database = FirebaseDatabase.getInstance().getReference()
@@ -66,6 +71,9 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                             //send signal to Arduino
                             ble!!.send("signal")
                             Log.i("BLE", "Signal sent")
+
+                            writeLine("Your turn...")
+                            writeLine("Please confirm with any button on the Arduino board")
                         }
                     }
                     Log.d("hi", "current patient email" + emailVali)
@@ -82,16 +90,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
             }
         }
         database.addValueEventListener(postListener)
-
-        //Summary View Text
-//        var passed = ArrayList<String>()
-//        var textshow = "Summary:"
-//
-//        passed = intent.getStringArrayListExtra("KEY")
-//        for( i in passed){
-//            textshow += "\n" + i
-//        }
-//        summaryTextView.text = textshow
 
         // Ensures Bluetooth is available on the device and it is enabled. If not,
         // displays a dialog requesting user permission to enable Bluetooth.
@@ -121,7 +119,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
             ), 1
         )
         startScan()
-        writeLine("You are on the waiting list...")
     }
 
     override fun onRSSIread(uart: BLEControl, rssi: Int) {
@@ -148,7 +145,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
     private fun startScan() {
         writeLine("Scanning for devices ...")
         ble!!.connectFirstAvailable()
-        Log.d("tag", "after connectFirstAvailable")
     }
 
     /**
@@ -185,6 +181,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      */
     override fun onConnected(ble: BLEControl) {
         writeLine("Connected!")
+        writeLine("You are on the waiting list...")
     }
 
     /**
@@ -209,10 +206,11 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      * @param rx: the received characteristic
      */
     override fun onReceive(ble: BLEControl, rx: BluetoothGattCharacteristic) {
-        writeLine("Received value: " + rx.getStringValue(0))
+//        writeLine("Received value: " + rx.getStringValue(0))
         if(rx.getStringValue(0) == "m") {
             Log.d("tag", "move current")
             Firebase.database.getReference().child("isAvailable").setValue("False")
+            writeLine("Confirmed !")
         }
     }
 

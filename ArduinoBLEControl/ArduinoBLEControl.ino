@@ -181,7 +181,7 @@ void loop(void)
 
 //    while(leftButtonState != HIGH || rightButtonState != HIGH){
 //    while(!CircuitPlayground.rigtButton()){
-    if(CircuitPlayground.rightButton()){
+    if(CircuitPlayground.rightButton() || CircuitPlayground.leftButton()){
       Serial.println("Button Clicked!");
       ble.print("m");
       buttonClicked = true;

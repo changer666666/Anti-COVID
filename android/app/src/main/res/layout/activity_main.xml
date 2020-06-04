@@ -4,36 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBack"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/signup_btn"
-        android:layout_width="128dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="138dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="28dp"
         android:onClick="signupClicked"
         android:text="Sign Up"
-        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorButtonText"
+        app:layout_constraintEnd_toEndOf="@+id/go_btn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/go_btn"
         app:layout_constraintTop_toBottomOf="@+id/go_btn" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="192dp"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
-        android:text="Walk In Clinic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="WALK IN CLINIC"
+        android:textAlignment="center"
+        android:textColor="#4ba3d8"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
@@ -45,7 +52,7 @@
         android:id="@+id/emailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -56,11 +63,15 @@
 
     <Button
         android:id="@+id/go_btn"
-        android:layout_width="128dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="138dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="28dp"
         android:onClick="goClicked"
         android:text="GO"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorButtonText"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
@@ -69,11 +80,24 @@
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/emailEditText"
+        app:layout_constraintStart_toStartOf="@+id/emailEditText"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.109"
+        app:srcCompat="@drawable/cliniclogo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

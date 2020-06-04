@@ -26,6 +26,7 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.second_activity)
+        title = "AntiCOVID - WALK IN CLINIC"
 
         serviceSpinner = findViewById(R.id.spinner1)
         doctorSpinner = findViewById(R.id.spinner2)
@@ -107,6 +108,12 @@ class SecondActivity : AppCompatActivity() {
         Log.d("tag", "$forprint")
 //        Toast.makeText(this, radioButton.text, Toast.LENGTH_SHORT).show()
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        finish()
+        Log.i("tag", "onPause")
     }
 
     companion object{
