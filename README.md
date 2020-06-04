@@ -39,9 +39,12 @@ Running Instruction
 
 Android and Arduino 
 ---
-1. Enter name, email address and passwaord for login. If it's first time using the app, please click "SIGN UP" for signing a new account into database.
-2. Pick a service, Doctor, and Insurance company using drop down list. Choose a payment method. Then click "NEXT" for Arduino connection.
+1. Enter name, email address and passwaord for login. If it's first time using the app, please click `SIGN UP` for signing a new account into database.
+
+2. Pick a service, Doctor, and Insurance company using drop down list. Choose a payment method. Then click `NEXT` for Arduino connection.
+
 3. Once it connected, you will be on the waiting list. When server confirmed your name, your will be moved on the current position and Arduino will make sound to remind you.
+
 4. User needs to click buttons on the Arduino board to confirm.
 
 
