@@ -16,6 +16,8 @@ import android.widget.RadioGroup
 import com.google.firebase.database.*
 import androidx.core.app.ActivityCompat
 import android.widget.TextView
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 import kotlinx.android.synthetic.main.third_activity.*
 
@@ -210,6 +212,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      */
     override fun onReceive(ble: BLEControl, rx: BluetoothGattCharacteristic) {
         writeLine("Received value: " + rx.getStringValue(0))
+        Firebase.database.getReference().child("isAvailable").setValue("False")
 
     }
 
