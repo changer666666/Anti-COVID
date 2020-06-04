@@ -57,7 +57,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
 //        summaryTextView.text = textshow
 
         //Read data from firebase
-        Log.d("hi", "readdata")
         database = FirebaseDatabase.getInstance().getReference()
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
