@@ -10,14 +10,12 @@ import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import com.google.firebase.database.*
 import androidx.core.app.ActivityCompat
 import android.widget.TextView
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-import kotlinx.android.synthetic.main.third_activity.*
 
 const val DEVICE_NAME = "bluet"
 
@@ -65,7 +63,9 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                     if (isAvailable == "True") {
                         if (emailCheck == emailVali) {
                             Log.d("hi", "it works")
-                            //TODO: send signal from here
+                            //send signal to Arduino
+                            ble!!.send("signal")
+                            Log.i("BLE", "Signal sent")
                         }
                     }
                     Log.d("hi", "current patient email" + emailVali)
@@ -121,6 +121,7 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
             ), 1
         )
         startScan()
+        writeLine("You are on the waiting list...")
     }
 
     override fun onRSSIread(uart: BLEControl, rssi: Int) {
@@ -184,7 +185,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      */
     override fun onConnected(ble: BLEControl) {
         writeLine("Connected!")
-        writeLine("You are on the waiting list...")
     }
 
     /**
@@ -210,7 +210,10 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
      */
     override fun onReceive(ble: BLEControl, rx: BluetoothGattCharacteristic) {
         writeLine("Received value: " + rx.getStringValue(0))
-
+        if(rx.getStringValue(0) == "m") {
+            Log.d("tag", "move current")
+            Firebase.database.getReference().child("isAvailable").setValue("False")
+        }
     }
 
     companion object {

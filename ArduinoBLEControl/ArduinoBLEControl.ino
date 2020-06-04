@@ -24,9 +24,12 @@ String start = "start";
 String stp = "stop";
 
 bool is_waiting = true;
+bool save_recvd = false;
 int dim = 0;
 
-bool test_signal = false;
+bool signal_received = false;
+bool buttonClicked = false;
+String recvd = "";
 
 const int speaker = 5;       // The CP microcontroller pin for the speaker
 const int leftButton = 4;    // The CP microcontroller pin for the left button
@@ -150,30 +153,51 @@ void loop(void)
         delay(50);
   }
 
+  if(save_recvd == false && received != ""){
+    recvd = received;
+    save_recvd = true;
+    Serial.println(recvd);
+  }
+
+  if(received != "" || recvd !="" ){
+    Serial.print("received:");
+    Serial.print(received);
+    Serial.print("recvd:");
+    Serial.println(recvd);
+    }
+
+
   leftButtonState = digitalRead(leftButton);
   rightButtonState = digitalRead(rightButton);
   
 //  received = "signal";// testing 
   
-  if(received == "signal"){
+  if(recvd == "signal"){
     is_waiting = false;
+    signal_received = true;
+    
     for(int i=0; i<10; i++)
       CircuitPlayground.setPixelColor(i,0,255,0);
 
-    if(leftButtonState == HIGH || rightButtonState == HIGH){
+//    while(leftButtonState != HIGH || rightButtonState != HIGH){
+//    while(!CircuitPlayground.rigtButton()){
+    if(CircuitPlayground.rightButton()){
       Serial.println("Button Clicked!");
-      test_signal = true;
+      ble.print("m");
+      buttonClicked = true;
+      signal_received = false;
+      recvd = "";
     }
-      
-    if(!test_signal){
-      makeTone(speaker,1760,100);
-      delay(250);
-    }
+  }
+
+  if(signal_received){
+    makeTone(speaker,1760,100);
+    delay(250);
   }
 
   //on waiting list, yellow spaining lights
   if(is_waiting){
-    Serial.println("waiting...");
+//    Serial.println("waiting...");
     for(int i=0; i<10; i++)
       CircuitPlayground.setPixelColor(i,255,255,0);
      
