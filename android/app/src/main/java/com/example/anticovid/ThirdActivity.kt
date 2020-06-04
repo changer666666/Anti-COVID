@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import android.widget.TextView
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.lang.Thread.sleep
 
 
 const val DEVICE_NAME = "bluet"
@@ -56,7 +57,6 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
 //        summaryTextView.text = textshow
 
         //Read data from firebase
-        Log.d("hi", "readdata")
         database = FirebaseDatabase.getInstance().getReference()
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -65,16 +65,15 @@ class ThirdActivity: AppCompatActivity(), BLEControl.Callback {
                     Log.d("hi", dataSnapshot.toString())
                     var isAvailable = dataSnapshot.child("isAvailable").getValue().toString()
                     var emailCheck = dataSnapshot.child("curPatient").getValue().toString()
-                    if (isAvailable == "True") {
-                        if (emailCheck == emailVali) {
-                            Log.d("hi", "it works")
+                    if (isAvailable == "True" && emailCheck == emailVali) {
                             //send signal to Arduino
                             ble!!.send("signal")
                             Log.i("BLE", "Signal sent")
-
                             writeLine("Your turn...")
                             writeLine("Please confirm with any button on the Arduino board")
-                        }
+                            sleep(2000);
+                            Log.d("hi", "it works & delay")
+
                     }
                     Log.d("hi", "current patient email" + emailVali)
 
