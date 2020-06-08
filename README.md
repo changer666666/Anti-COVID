@@ -112,8 +112,12 @@ Edit the configuration file in Apache folder:
 
 Reference
 ===
+App Logo:
+
+[Clinic Logo] (https://www.logolynx.com/topic/clinic#&gid=1&pid=1)
 
 Website:
+
 [React-bootstrap] (https://react-bootstrap.github.io/)
 
 [Firebase Admin SDK for PHP] (https://firebase-php.readthedocs.io/en/latest/overview.html)
